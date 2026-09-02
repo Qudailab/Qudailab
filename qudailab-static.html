@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Обучение ИИ Qudailab</title>
+<style>
+  :root {
+    --bg: #14161a;
+    --panel: #1d2024;
+    --line: rgba(236,231,221,0.12);
+    --line-strong: rgba(236,231,221,0.22);
+    --text: #ece7dd;
+    --text-dim: #a3a09a;
+    --text-faint: #6f6d68;
+    --amber: #c98a4b;
+    --teal: #6f9491;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px 80px; }
+  header.top { padding: 20px 20px; max-width: 640px; margin: 0 auto; }
+  .brand { font-size: 13px; letter-spacing: 0.02em; color: var(--text-dim); }
+  .hero { position: relative; padding: 30px 0 40px; text-align: center; }
+  .aperture { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 340px; height: 340px; opacity: 0.55; pointer-events: none; }
+  .hero h1 { position: relative; font-family: Georgia, "Iowan Old Style", serif; font-weight: 400; font-size: 34px; line-height: 1.2; margin: 0 0 14px; letter-spacing: 0.01em; }
+  .hero p.sub { position: relative; font-size: 15px; color: var(--text-dim); max-width: 420px; margin: 0 auto; }
+  .specs { display: flex; justify-content: center; gap: 18px; margin: 26px 0 6px; flex-wrap: wrap; }
+  .spec { font-size: 11px; color: var(--text-faint); border: 1px solid var(--line); border-radius: 3px; padding: 5px 10px; letter-spacing: 0.03em; }
+  .intro { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; margin: 30px 0; color: var(--text-dim); font-size: 15px; }
+  h2.section-title { font-family: Georgia, serif; font-weight: 400; font-size: 20px; margin: 0 0 16px; color: var(--text); }
+  .empty { text-align: center; color: var(--text-faint); font-size: 14px; padding: 40px 20px; border: 1px dashed var(--line); border-radius: 6px; }
+  .lesson { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-bottom: 18px; background: var(--panel); }
+  .lesson img { width: 100%; display: block; max-height: 360px; object-fit: cover; }
+  .lesson-body { padding: 16px 18px; }
+  .lesson-date { font-size: 11px; color: var(--text-faint); margin: 0 0 8px; letter-spacing: 0.02em; }
+  .lesson-title { font-size: 17px; margin: 0 0 8px; color: var(--text); }
+  .lesson-text { font-size: 14px; color: var(--text-dim); white-space: pre-wrap; margin: 0; }
+  footer { text-align: center; color: var(--text-faint); font-size: 12px; padding: 30px 20px 10px; }
+</style>
+</head>
+<body>
+
+<header class="top"><span class="brand mono">QUDAILAB</span></header>
+
+<div class="wrap">
+  <section class="hero">
+    <svg class="aperture" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="#c98a4b" stroke-opacity="0.25" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="72" fill="none" stroke="#c98a4b" stroke-opacity="0.35" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="50" fill="none" stroke="#c98a4b" stroke-opacity="0.45" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="30" fill="none" stroke="#6f9491" stroke-opacity="0.4" stroke-width="0.5"/>
+    </svg>
+    <h1>Обучение ИИ Qudailab</h1>
+    <p class="sub">Планы, ракурсы и движение камеры — язык, на котором нейросеть понимает кино.</p>
+    <div class="specs">
+      <span class="spec mono">ПЛАНЫ</span>
+      <span class="spec mono">РАКУРСЫ</span>
+      <span class="spec mono">ДВИЖЕНИЕ КАМЕРЫ</span>
+    </div>
+  </section>
+
+  <div class="intro">
+    Здесь разбираю, как объяснять нейросети операторскую работу: с каких точек снимать, как выстраивать план и задавать движение камеры, чтобы ИИ-видео выглядело как кино, а не как случайный набор кадров.
+  </div>
+
+  <h2 class="section-title">Уроки</h2>
+  <div id="lessons-list"></div>
+  <div id="empty-state" class="empty" style="display:none;">Уроков пока нет.</div>
+
+  <footer>Qudailab &mdash; обучение работе с ИИ-видео</footer>
+</div>
+
+<script>
+/*
+  ===================================================================
+  КАК ДОБАВИТЬ УРОК
+  ===================================================================
+  1. Положи фото в папку "photos" рядом с этим html-файлом
+     (например: photos/urok1.jpg)
+  2. Скопируй один блок { ... } ниже и вставь в массив LESSONS,
+     заполни title, text, photo, date.
+  3. Если фото нет — просто удали строку "photo: ..." из блока.
+  4. Сохрани файл и залей заново на хостинг (см. инструкцию в чате).
+  Уроки отображаются в обратном порядке — последний добавленный
+  в массиве будет показан первым на странице.
+  ===================================================================
+*/
+const LESSONS = [
+  {
+    title: "Пример урока — можно удалить",
+    text: "Так выглядит текст урока. Замени на свой разбор плана, ракурса или движения камеры.",
+    photo: "photos/example.jpg",
+    date: "2026-09-03"
+  }
+];
+
+(function() {
+  const listEl = document.getElementById('lessons-list');
+  const emptyEl = document.getElementById('empty-state');
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  emptyEl.style.display = LESSONS.length === 0 ? 'block' : 'none';
+  LESSONS.slice().reverse().forEach(function(l) {
+    const card = document.createElement('div');
+    card.className = 'lesson';
+    let html = '';
+    if (l.photo) html += '<img src="' + l.photo + '" alt="' + esc(l.title || 'Урок') + '" />';
+    html += '<div class="lesson-body">';
+    if (l.date) html += '<p class="lesson-date mono">' + fmtDate(l.date) + '</p>';
+    if (l.title) html += '<p class="lesson-title">' + esc(l.title) + '</p>';
+    if (l.text) html += '<p class="lesson-text">' + esc(l.text) + '</p>';
+    html += '</div>';
+    card.innerHTML = html;
+    listEl.appendChild(card);
+  });
+})();
+</script>
+
+</body>
+</html>
